@@ -1,0 +1,36 @@
+{% load static %}
+
+<html>
+    <head>
+        <title>PetRank | Cast Your Vote</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://gstatic.com" crossorigin>
+<link href="https://googleapis.com" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+    </head>
+
+    <body>
+        <header>
+            <div class="nav-left">
+            <h1><a href="{% url 'home' %}">Voting home</a></h1>
+            </div>
+            <div class="nav-right">
+                <a href="{% url 'pet_new' %}">+ New Pet </a>
+            </div>
+        </header>
+        {% if user.is_authenticated %}
+        <p>Hi {{ user.username }}!</p>
+        <form action="{% url "logout" %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Log Out</button>
+        </form>
+        {% else %}
+        <p>You are not logged in.</p>
+        <a href="{% url 'login' %}">Log In</a> | 
+        <a href="{% url 'signup' %}">Sign Up</a>
+        {% endif %}
+        {% block content %}
+        {% endblock %}
+    </body>
+</html>
